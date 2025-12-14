@@ -1,0 +1,5 @@
+{
+  "name": "Restoe POS",
+  "description": "A modern, responsive Point of Sale interface for restaurants featuring menu selection, category filtering, and a real-time invoice summary.",
+  "requestFramePermissions": []
+}
