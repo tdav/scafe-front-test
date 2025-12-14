@@ -8,7 +8,11 @@ import {
   LogOut 
 } from 'lucide-react';
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  onLogout?: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
   return (
     <div className="w-20 bg-white h-screen flex flex-col items-center py-6 border-r border-gray-100 flex-shrink-0">
       {/* Logo */}
@@ -36,7 +40,10 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Logout */}
-      <button className="w-12 h-12 flex items-center justify-center text-red-400 hover:bg-red-50 rounded-xl mt-auto transition-all">
+      <button 
+        onClick={onLogout}
+        className="w-12 h-12 flex items-center justify-center text-red-400 hover:bg-red-50 rounded-xl mt-auto transition-all"
+      >
         <LogOut size={24} />
       </button>
     </div>

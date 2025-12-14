@@ -4,10 +4,13 @@ import { TopBar } from './components/TopBar';
 import { CategorySection } from './components/CategorySection';
 import { MenuGrid } from './components/MenuGrid';
 import { OrderPanel } from './components/OrderPanel';
+import { AuthPage } from './components/AuthPage';
 import { CATEGORIES, MENU_ITEMS } from './constants';
-import { MenuItem, CartItem } from './types';
+import { MenuItem, CartItem, User } from './types';
 
 const App: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('lunch');
   const [cart, setCart] = useState<CartItem[]>([
     // Pre-populating cart based on the design screenshot
@@ -15,6 +18,22 @@ const App: React.FC = () => {
     { ...MENU_ITEMS[1], quantity: 2 },
     { ...MENU_ITEMS[5], quantity: 2 }
   ]);
+
+  const handleAuthenticate = (user: User) => {
+    setCurrentUser(user);
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setIsAuthenticated(false);
+    setCart([]);
+  };
+
+  // Show AuthPage if not authenticated
+  if (!isAuthenticated) {
+    return <AuthPage onAuthenticate={handleAuthenticate} />;
+  }
 
   const handleAddToCart = (item: MenuItem) => {
     setCart(prev => {
@@ -45,7 +64,7 @@ const App: React.FC = () => {
   return (
     <div className="flex w-screen h-screen overflow-hidden bg-[#F3F4F6]">
       {/* 1. Left Sidebar */}
-      <Sidebar />
+      <Sidebar onLogout={handleLogout} />
 
       {/* 2. Main Content Area */}
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
